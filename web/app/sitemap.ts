@@ -4,7 +4,17 @@ import { docsOrder } from "@/content/docs-nav";
 const base = "https://wingman.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const top = ["", "/features", "/install", "/changelog", "/about"];
+  const top = [
+    "",
+    "/features",
+    "/compare",
+    "/use-cases",
+    "/providers",
+    "/security",
+    "/install",
+    "/changelog",
+    "/about",
+  ];
   const docs = docsOrder.map((d) => d.href); // /docs and all sub-pages
   const routes = [...top, ...docs];
   return routes.map((r) => ({

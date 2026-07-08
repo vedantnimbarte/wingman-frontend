@@ -4,10 +4,10 @@ export type NavItem = { label: string; href: string; external?: boolean };
 
 export const navLinks: NavItem[] = [
   { label: "Features", href: "/features" },
-  { label: "Install", href: "/install" },
+  { label: "Compare", href: "/compare" },
   { label: "Docs", href: "/docs" },
+  { label: "Install", href: "/install" },
   { label: "Changelog", href: "/changelog" },
-  { label: "About", href: "/about" },
 ];
 
 export const footerColumns: { heading: string; links: NavItem[] }[] = [
@@ -15,7 +15,9 @@ export const footerColumns: { heading: string; links: NavItem[] }[] = [
     heading: "Product",
     links: [
       { label: "Features", href: "/features" },
-      { label: "Install", href: "/install" },
+      { label: "Compare", href: "/compare" },
+      { label: "Use cases", href: "/use-cases" },
+      { label: "Providers", href: "/providers" },
       { label: "Changelog", href: "/changelog" },
     ],
   },
@@ -24,6 +26,7 @@ export const footerColumns: { heading: string; links: NavItem[] }[] = [
     links: [
       { label: "Documentation", href: "/docs" },
       { label: "Install", href: "/install" },
+      { label: "Security & privacy", href: "/security" },
       { label: "Architecture", href: product.architectureDocs, external: true },
     ],
   },

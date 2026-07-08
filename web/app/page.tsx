@@ -4,6 +4,7 @@ import { PillarSection } from "@/components/sections/PillarSection";
 import { FeatureGrid } from "@/components/sections/FeatureGrid";
 import { InstallBand } from "@/components/sections/InstallBand";
 import { SocialProof } from "@/components/sections/SocialProof";
+import { CompareTeaser } from "@/components/sections/CompareTeaser";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { pillars, secondaryFeatures } from "@/content/features";
 import { product } from "@/content/product";
@@ -28,6 +29,7 @@ export default function HomePage() {
       />
 
       <SocialProof />
+      <CompareTeaser />
       <InstallBand />
       <CtaBanner />
 
