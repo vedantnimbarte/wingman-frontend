@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.svg" alt="Wingman" width="420">
+</p>
+
 # Wingman Frontend
 
 The marketing website and documentation portal for **[Wingman](https://github.com/vedantnimbarte/Wingman)** — an open-source, terminal-first, multi-provider coding agent written in Rust.
