@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Marketing website for Wingman — the open-source, terminal-first coding agent.",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
