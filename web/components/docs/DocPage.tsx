@@ -23,7 +23,7 @@ export function DocPage({
 }) {
   return (
     <div className="mx-auto flex w-full max-w-5xl gap-12 px-6 py-10 md:px-10">
-      <article id="doc-article" className="min-w-0 flex-1">
+      <article id="doc-article" data-pagefind-body className="min-w-0 flex-1">
         <div className="mb-4 flex items-center justify-between gap-4">
           <Breadcrumbs group={group} title={title} />
           <CopyMarkdown title={title} description={description} path={path} />
