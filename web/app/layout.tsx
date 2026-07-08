@@ -1,9 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { sans, mono } from "@/lib/fonts";
 import { TopNav } from "@/components/nav/TopNav";
 import { Footer } from "@/components/footer/Footer";
+import { Analytics } from "@/components/Analytics";
+import { getRepoStats } from "@/lib/github";
 import { product } from "@/content/product";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#010102",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wingman.dev"),
@@ -39,7 +45,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { stars } = await getRepoStats();
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-screen">
@@ -49,9 +56,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <TopNav />
+        <TopNav stars={stars} />
         <main id="main">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

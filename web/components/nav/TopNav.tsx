@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { navLinks } from "@/content/nav";
 import { product } from "@/content/product";
+import { formatCount } from "@/lib/github";
 import { cn } from "@/lib/cn";
 
-export function TopNav() {
+export function TopNav({ stars = 0 }: { stars?: number }) {
   const [open, setOpen] = useState(false);
+  const starLabel = stars > 0 ? formatCount(stars) : null;
 
   return (
     <header className="sticky top-0 z-50 border-b border-hairline/60 bg-canvas/85 backdrop-blur-md">
@@ -35,11 +37,12 @@ export function TopNav() {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button href={product.repo} external variant="secondary">
+          <Button href={product.repo} external variant="secondary" analytics="nav_github">
             <GitHubIcon />
-            Star on GitHub
+            Star
+            {starLabel ? <span className="text-ink-subtle">{starLabel}</span> : null}
           </Button>
-          <Button href="/install" variant="primary">
+          <Button href="/install" variant="primary" analytics="nav_install">
             Install
           </Button>
         </div>
@@ -76,11 +79,11 @@ export function TopNav() {
               </Link>
             ))}
             <div className="mt-3 flex flex-col gap-2">
-              <Button href={product.repo} external variant="secondary" size="lg">
+              <Button href={product.repo} external variant="secondary" size="lg" analytics="nav_github">
                 <GitHubIcon />
-                Star on GitHub
+                Star on GitHub{starLabel ? ` · ${starLabel}` : ""}
               </Button>
-              <Button href="/install" variant="primary" size="lg">
+              <Button href="/install" variant="primary" size="lg" analytics="nav_install">
                 Install
               </Button>
             </div>

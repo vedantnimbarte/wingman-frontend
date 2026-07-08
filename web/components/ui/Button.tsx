@@ -24,6 +24,8 @@ type CommonProps = {
   variant?: Variant;
   size?: Size;
   className?: string;
+  /** Fires a `data-analytics` event on click (see components/Analytics). */
+  analytics?: string;
   children: React.ReactNode;
 };
 
@@ -38,18 +40,20 @@ export function Button({
   className,
   href,
   external,
+  analytics,
   children,
 }: ButtonAsLink) {
   const classes = cn(base, sizes[size], variants[variant], className);
+  const data = analytics ? { "data-analytics": analytics } : {};
   if (external || href.startsWith("http")) {
     return (
-      <a href={href} target="_blank" rel="noreferrer noopener" className={classes}>
+      <a href={href} target="_blank" rel="noreferrer noopener" className={classes} {...data}>
         {children}
       </a>
     );
   }
   return (
-    <Link href={href} className={classes}>
+    <Link href={href} className={classes} {...data}>
       {children}
     </Link>
   );

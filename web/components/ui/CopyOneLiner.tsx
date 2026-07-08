@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { track } from "@/lib/analytics";
 
 /**
  * The install one-liner in a mono chip with a one-click copy button.
@@ -22,6 +23,7 @@ export function CopyOneLiner({
     try {
       await navigator.clipboard.writeText(command);
       setCopied(true);
+      track("copy_command", { command: command.slice(0, 60) });
       setTimeout(() => setCopied(false), 1800);
     } catch {
       // Clipboard blocked — the text is still selectable in the chip.

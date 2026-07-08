@@ -16,10 +16,10 @@ export function CtaBanner() {
             local model.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button href="/install" variant="primary" size="lg">
+            <Button href="/install" variant="primary" size="lg" analytics="cta_install">
               Install Wingman
             </Button>
-            <Button href={product.repo} external variant="secondary" size="lg">
+            <Button href={product.repo} external variant="secondary" size="lg" analytics="cta_github">
               <GitHubIcon />
               Star on GitHub
             </Button>
