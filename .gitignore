@@ -1,0 +1,13 @@
+# Dependencies / build output (also covered by web/.gitignore)
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local env / editor / OS
+.env*.local
+.vercel
+.DS_Store
+*.log
