@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(94, 106, 210, 0.35);
+    color: #f7f8f8;
+  }
+
+  /* Single, consistent focus treatment (DESIGN.md elevation level 4). */
+  :focus-visible {
+    outline: 2px solid rgba(94, 105, 209, 0.6);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::placeholder {
+    @apply text-ink-tertiary;
+  }
+}
+
+@layer components {
+  /* Lifted panel: surface bg comes from a utility; this adds the hairline
+     border + the subtle top-edge highlight. Depth without drop shadows. */
+  .lift {
+    @apply border border-hairline shadow-lift;
+  }
+  .lift-strong {
+    @apply border border-hairline-strong shadow-lift;
+  }
+
+  /* Faint radial wash behind the hero — NOT an atmospheric gradient over the
+     whole page; a single, near-invisible lift of the canvas around the fold. */
+  .hero-wash {
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgba(94, 106, 210, 0.08), transparent 70%);
+  }
+
+  .link-emphasis {
+    @apply text-primary underline-offset-4 hover:text-primary-hover hover:underline;
+  }
+
+  /* Article typography for docs pages — keeps page authoring to plain tags.
+     Descendant rules are wrapped in :where() so their specificity stays at
+     the element level (0,0,1) and any utility class on a nested component
+     (a <Button>, a card link) still wins. */
+  .doc-prose {
+    @apply text-body text-ink-muted;
+  }
+  :where(.doc-prose) p {
+    @apply my-4 leading-relaxed;
+  }
+  :where(.doc-prose) ul {
+    @apply my-4 list-disc space-y-2 pl-5 marker:text-ink-tertiary;
+  }
+  :where(.doc-prose) ol {
+    @apply my-4 list-decimal space-y-2 pl-5 marker:text-ink-tertiary;
+  }
+  :where(.doc-prose) li {
+    @apply pl-1 text-ink-muted;
+  }
+  :where(.doc-prose) a {
+    @apply text-primary underline underline-offset-4 hover:text-primary-hover;
+  }
+  :where(.doc-prose) strong {
+    @apply font-medium text-ink;
+  }
+}
+
+@layer utilities {
+  .container-content {
+    @apply mx-auto w-full max-w-content px-6 md:px-8;
+  }
+}
