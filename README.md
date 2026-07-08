@@ -46,7 +46,9 @@ It is a **marketing + docs** site. Exhaustive product internals (crate-level arc
 
 - **Dark, restrained design system** — near-black canvas (`#010102`), a single lavender-blue accent (`#5e6ad2`) used only for the brand mark, primary CTAs, focus rings, and link emphasis. A four-step surface ladder carries depth without drop shadows.
 - **Terminal captures as the "product screenshot"** — Wingman's TUI, headless `--print --json`, and `pilot` runs are rendered as **real, selectable text** (crisp at any DPI, theme-consistent, lightweight) rather than raster images.
-- **A full documentation portal** — persistent sidebar, **⌘K search**, scroll-spy "on this page" TOC, callouts, copy-enabled code blocks, heading permalinks, prev/next paging, and a mobile drawer.
+- **A full documentation portal** — persistent sidebar, **⌘K full-text search** (Pagefind), scroll-spy "on this page" TOC, callouts, **build-time syntax highlighting** (Shiki), copy-enabled code blocks, heading permalinks, prev/next paging, a "Copy for LLM" button, and a mobile drawer.
+- **Marketing depth** — an animated hero terminal, a competitor comparison, a use-case cookbook, a providers showcase, a security page, and a live GitHub-stars social-proof strip.
+- **Discoverable** — RSS feed for the changelog, an `llms.txt` for AI crawlers, branded Open Graph images, and opt-in, cookieless analytics (off by default).
 - **Static & fast** — every page is prerendered; ~87–95 kB First Load JS; only two client components ship interactivity (the nav menu and the copy button, plus the docs search/sidebar).
 - **Self-hosted fonts** — Inter + JetBrains Mono via `next/font`; no external network requests at runtime.
 - **Single source of truth for facts** — all product copy (providers, platforms, commands) flows from typed `content/*.ts` modules, kept in sync with the product repo.
@@ -56,13 +58,18 @@ It is a **marketing + docs** site. Exhaustive product internals (crate-level arc
 
 | Route | Purpose |
 |---|---|
-| `/` | Home — hero, provider marquee, four feature pillars, feature grid, install band, CTA |
+| `/` | Home — hero (animated terminal), provider marquee, pillars, social proof, compare teaser, install, CTA |
 | `/features` | Deep-dive on each pillar + the secondary feature grid |
+| `/compare` | Comparison matrix vs Claude Code, Cursor & Aider (with a fair-use disclaimer) |
+| `/use-cases` | Recipe cookbook — CI review, pilot, local-only, batch, and more |
+| `/providers` | Showcase of the 73+ providers, grouped (native · OpenAI-compatible · local) |
+| `/security` | Security & privacy — keyring, local models, no telemetry, guardrails |
 | `/install` | Platform matrix (with the real glibc ≥ 2.38 note), per-OS commands, first-run steps |
-| `/changelog` | Release history, sourced from **GitHub Releases at build time** (static fallback) |
+| `/changelog` | Release history from **GitHub Releases at build time**; RSS at `/rss.xml` |
 | `/about` | Philosophy + an honest "ships today vs planned" section + architecture links |
 | `/docs/*` | The documentation portal (see below) |
-| `/sitemap.xml`, `/robots.txt` | SEO route handlers |
+| `/rss.xml`, `/llms.txt` | Changelog RSS feed; AI-crawler site map |
+| `/sitemap.xml`, `/robots.txt`, `/opengraph-image` | SEO routes + branded OG image |
 | `404` | On-brand not-found page |
 
 ## Documentation portal
@@ -176,21 +183,23 @@ Run from `web/`:
 
 | Script | Does |
 |---|---|
-| `npm run dev` | Dev server with hot reload |
-| `npm run build` | Static production build (`.next/`) |
-| `npm run start` | Serve the production build locally |
+| `npm run dev` | Dev server with hot reload (search falls back to the static index) |
+| `npm run build` | Static export to `out/`, then `postbuild` builds the Pagefind index |
+| `npm run preview` | Serve the exported `out/` locally |
 | `npm run lint` | ESLint (`next/core-web-vitals`) |
 
 ## Deployment
 
-The site is fully static — deploy anywhere that serves a Next.js SSG build.
+The site is a **static export** (`output: 'export'`) — `npm run build` emits `out/` (HTML/CSS/JS + the Pagefind index) for any static host.
 
 - **Vercel (recommended):** point it at the `web/` directory; zero config. Preview deploys per PR.
-- **Static export:** add `output: 'export'` to `web/next.config.mjs` and `npm run build` emits `out/` for any static host (GitHub Pages, Netlify, S3/CDN).
+- **Any static host:** upload `out/` (GitHub Pages, Netlify, S3/CDN).
 
-> **Build-time note:** `/changelog` fetches GitHub Releases during the build. Ensure the build machine has network access (optionally a `GITHUB_TOKEN` to avoid the unauthenticated rate limit); it falls back to a static seed on failure.
-
-Before deploying, update the placeholder domain (`https://wingman.dev`) used by `metadataBase`, the sitemap, and OG metadata in `web/app/layout.tsx` and `web/app/sitemap.ts`.
+Notes:
+- **Build-time fetches:** `/changelog`, `/rss.xml`, and the GitHub-stars count fetch from the GitHub API during the build. Ensure network access (optionally a `GITHUB_TOKEN` to avoid the unauthenticated rate limit); all fall back gracefully.
+- **Analytics is opt-in:** set `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` to enable cookieless Plausible; unset (the default) ships no tracker.
+- **OG image content-type:** on Vercel the generated `/opengraph-image` is served as `image/png`. Some dumb static hosts serve extension-less files as `application/octet-stream` — set a rule for `/opengraph-image` if a scraper rejects it.
+- Before deploying, replace the placeholder domain (`https://wingman.dev`) in `web/app/layout.tsx`, `web/app/sitemap.ts`, and the RSS/llms routes.
 
 ## Performance & accessibility
 
@@ -225,13 +234,12 @@ And for the *why*: [`PRD.md`](PRD.md) (requirements), [`PLAN.md`](PLAN.md) (buil
 
 ## Roadmap
 
-Built and shipping; the following were scoped as later phases and are **not yet done**:
+Built and shipping. Remaining nice-to-haves:
 
-- Branded Open Graph images per page (`next/og`)
-- A real logo/wordmark asset (a placeholder lavender chevron is used today)
-- Privacy-safe analytics + event instrumentation (one-liner copies, CTA clicks)
+- CI (build + lint) and branch protection on this repo
 - Lighthouse CI budget in the build pipeline
-- Full-text docs search (current search indexes page titles + keywords)
+- Playwright smoke + axe accessibility tests
+- Per-page (vs inherited) OG images
 - Final domain + hosting configuration
 
 ## License
