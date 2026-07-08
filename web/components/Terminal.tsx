@@ -1,44 +1,22 @@
 import { cn } from "@/lib/cn";
-import { terminals, type Line, type Span } from "@/content/terminals";
-
-const colorClass: Record<string, string> = {
-  accent: "text-primary",
-  dim: "text-ink-subtle",
-  ok: "text-success",
-  path: "text-ink-muted",
-  user: "text-primary-hover",
-};
-
-function renderSpan(span: Span, key: number) {
-  if (typeof span === "string") return <span key={key}>{span}</span>;
-  return (
-    <span key={key} className={colorClass[span.c]}>
-      {span.t}
-    </span>
-  );
-}
-
-function renderLine(line: Line, key: number) {
-  const spans = Array.isArray(line) ? line : [line];
-  const empty = !Array.isArray(line) && line === "";
-  return (
-    <div key={key} className="min-h-[1.4em] whitespace-pre">
-      {empty ? " " : spans.map(renderSpan)}
-    </div>
-  );
-}
+import { terminals } from "@/content/terminals";
+import { renderLine } from "@/components/terminalRender";
+import { AnimatedBody } from "@/components/AnimatedBody";
 
 /**
  * The dominant card type — the site's "product screenshot." Renders a Wingman
  * terminal capture as real, selectable text (crisp at any DPI, theme-consistent).
+ * Pass `animated` to type it out line-by-line (hero use).
  */
 export function Terminal({
   name,
   caption,
+  animated = false,
   className,
 }: {
   name: keyof typeof terminals;
   caption?: string;
+  animated?: boolean;
   className?: string;
 }) {
   const term = terminals[name];
@@ -56,9 +34,13 @@ export function Terminal({
         </div>
         {/* Body */}
         <div className="overflow-x-auto p-5">
-          <pre className="font-mono text-mono leading-relaxed text-ink" aria-label={term.summary}>
-            <code>{term.lines.map(renderLine)}</code>
-          </pre>
+          {animated ? (
+            <AnimatedBody term={term} />
+          ) : (
+            <pre className="font-mono text-mono leading-relaxed text-ink" aria-label={term.summary}>
+              <code>{term.lines.map((l, i) => renderLine(l, i))}</code>
+            </pre>
+          )}
         </div>
       </div>
       {caption ? (

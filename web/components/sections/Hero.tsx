@@ -24,10 +24,10 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button href="/install" variant="primary" size="lg">
+              <Button href="/install" variant="primary" size="lg" analytics="hero_install">
                 Install
               </Button>
-              <Button href={product.repo} external variant="secondary" size="lg">
+              <Button href={product.repo} external variant="secondary" size="lg" analytics="hero_github">
                 <GitHubIcon />
                 Star on GitHub
               </Button>
@@ -46,7 +46,7 @@ export function Hero() {
           </div>
 
           <div className="animate-fade-up [animation-delay:120ms]">
-            <Terminal name="hero" />
+            <Terminal name="hero" animated />
           </div>
         </div>
       </Container>
