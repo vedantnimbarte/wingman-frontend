@@ -54,7 +54,7 @@ wingman logout openai      # removes the stored key`}</CodeBlock>
 # probes localhost for Ollama (11434), LM Studio (1234), vLLM (8000)
 # and prints the models each exposes`}</CodeBlock>
       <p>Or point a provider at a custom endpoint in config:</p>
-      <CodeBlock>{`# ~/.wingman/config.toml
+      <CodeBlock lang="toml">{`# ~/.wingman/config.toml
 [providers.ollama]
 base_url = "http://localhost:11434/v1"
 model = "llama3.1"`}</CodeBlock>
@@ -67,7 +67,7 @@ model = "llama3.1"`}</CodeBlock>
         Or from the CLI with <Code>--model</Code>. Set a fallback chain so the runtime walks to the
         next model on failure (see <Link href="/docs/configuration">Configuration → router</Link>):
       </p>
-      <CodeBlock>{`[router]
+      <CodeBlock lang="toml">{`[router]
 fallback_models = ["openai/gpt-4.1", "openrouter/anthropic/claude-opus-4-8"]`}</CodeBlock>
     </DocPage>
   );

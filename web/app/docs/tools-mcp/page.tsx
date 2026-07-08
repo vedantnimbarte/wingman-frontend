@@ -41,7 +41,7 @@ export default function ToolsMcp() {
         Declare Model Context Protocol servers in config. Their tools are namespaced{" "}
         <Code>mcp__&lt;server&gt;__&lt;tool&gt;</Code> and dispatched exactly like built-ins.
       </p>
-      <CodeBlock>{`# ~/.wingman/config.toml
+      <CodeBlock lang="toml">{`# ~/.wingman/config.toml
 
 # stdio transport
 [mcp.github]

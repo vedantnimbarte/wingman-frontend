@@ -1,45 +1,30 @@
-"use client";
-
-import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { highlight } from "@/lib/highlighter";
+import { CopyButton } from "./CopyButton";
 
-/** Multi-line code with a copy button (config/command snippets). */
-export function CodeBlock({
+/**
+ * Multi-line code with build-time Shiki highlighting and a copy button.
+ * Async server component — no highlighter code ships to the client.
+ */
+export async function CodeBlock({
   children,
+  lang = "bash",
   className,
   copyable = true,
 }: {
   children: string;
+  lang?: string;
   className?: string;
   copyable?: boolean;
 }) {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(children);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch {
-      /* clipboard blocked — text is still selectable */
-    }
-  }
-
+  const html = await highlight(children, lang);
   return (
     <div className={cn("group relative my-4", className)}>
-      <pre className="overflow-x-auto rounded-md border border-hairline bg-surface-1 p-4 pr-12 font-mono text-mono leading-relaxed text-ink-muted">
-        <code>{children}</code>
-      </pre>
-      {copyable ? (
-        <button
-          type="button"
-          onClick={copy}
-          aria-label="Copy code"
-          className="absolute right-2 top-2 rounded-md border border-hairline bg-surface-2 px-2 py-1 text-caption text-ink-subtle opacity-0 transition-opacity hover:text-ink focus-visible:opacity-100 group-hover:opacity-100"
-        >
-          {copied ? "Copied" : "Copy"}
-        </button>
-      ) : null}
+      <div
+        className="overflow-x-auto rounded-md border border-hairline bg-surface-1 p-4 pr-12 font-mono text-mono leading-relaxed [&_code]:!bg-transparent [&_pre]:!m-0 [&_pre]:!bg-transparent"
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+      {copyable ? <CopyButton code={children.replace(/\n$/, "")} /> : null}
     </div>
   );
 }

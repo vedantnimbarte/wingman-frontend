@@ -77,7 +77,7 @@ wingman session fork <id>     # fork (optionally truncate) and resume
           ["user_prompt_submit", "When you submit a prompt."],
         ]}
       />
-      <CodeBlock>{`[hooks]
+      <CodeBlock lang="toml">{`[hooks]
 pre_tool_use = [
   { command = "./scripts/guard.sh", match_tool = "run_shell", block = true, timeout_secs = 10 },
 ]`}</CodeBlock>

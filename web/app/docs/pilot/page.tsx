@@ -55,7 +55,7 @@ export default function Pilot() {
 
       <DocHeading as="h2" id="config">Configuring pilot</DocHeading>
       <p>Tune concurrency, budget, and models under <Code>[pilot]</Code>:</p>
-      <CodeBlock>{`[pilot]
+      <CodeBlock lang="toml">{`[pilot]
 tier                  = "copilot"    # host | copilot | autopilot | assist
 worker_model          = "claude-haiku-4-5"
 max_concurrent_agents = 4

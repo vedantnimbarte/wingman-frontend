@@ -31,7 +31,7 @@ export default function Configuration() {
       </p>
 
       <DocHeading as="h2" id="example">Example config.toml</DocHeading>
-      <CodeBlock>{`default_provider = "anthropic"
+      <CodeBlock lang="toml">{`default_provider = "anthropic"
 default_model    = "claude-opus-4-8"
 permission_mode  = "read-only"      # read-only | plan | auto-edit | yolo
 
