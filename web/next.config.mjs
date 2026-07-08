@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Marketing site is fully static; keep it that way.
+  // Fully static site — export to `out/` so any static host (and the
+  // Pagefind full-text index) can serve it directly.
+  output: "export",
   images: {
-    formats: ["image/avif", "image/webp"],
+    unoptimized: true,
   },
 };
 
