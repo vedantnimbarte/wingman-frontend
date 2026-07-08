@@ -1,6 +1,7 @@
 import { Breadcrumbs } from "./Breadcrumbs";
 import { PrevNext } from "./PrevNext";
 import { Toc } from "./Toc";
+import { CopyMarkdown } from "./CopyMarkdown";
 import { product } from "@/content/product";
 
 /**
@@ -23,7 +24,10 @@ export function DocPage({
   return (
     <div className="mx-auto flex w-full max-w-5xl gap-12 px-6 py-10 md:px-10">
       <article id="doc-article" className="min-w-0 flex-1">
-        <Breadcrumbs group={group} title={title} />
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <Breadcrumbs group={group} title={title} />
+          <CopyMarkdown title={title} description={description} path={path} />
+        </div>
         <h1 className="text-display-lg text-ink">{title}</h1>
         {description ? <p className="mt-4 text-body-lg text-ink-subtle">{description}</p> : null}
 

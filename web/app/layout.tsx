@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     description: product.positioning,
   },
   robots: { index: true, follow: true },
+  alternates: {
+    types: { "application/rss+xml": "/rss.xml" },
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

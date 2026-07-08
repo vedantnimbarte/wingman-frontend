@@ -19,6 +19,14 @@ export default async function ChangelogPage() {
         lead="Every release, newest first — sourced from GitHub Releases."
       />
 
+      <section className="pt-6">
+        <Container>
+          <a href="/rss.xml" className="text-body-sm link-emphasis">
+            Subscribe via RSS ↗
+          </a>
+        </Container>
+      </section>
+
       <section className="py-8">
         <Container>
           <div className="mx-auto max-w-3xl">
