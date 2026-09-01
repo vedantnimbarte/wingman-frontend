@@ -39,11 +39,11 @@ export default function SecurityPage() {
         lead="Wingman is built for people who don't want a black box between them and their code."
       />
 
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
           <div className="grid gap-4 md:grid-cols-2">
             {pillars.map((p) => (
-              <div key={p.title} className="rounded-lg border border-hairline bg-surface-1 p-6 shadow-lift">
+              <div key={p.title} className="rounded-lg border border-hairline bg-surface-1/70 p-7">
                 <h2 className="text-card-title text-ink">{p.title}</h2>
                 <p className="mt-3 text-body-sm text-ink-subtle">{p.body}</p>
               </div>
@@ -52,9 +52,9 @@ export default function SecurityPage() {
         </Container>
       </section>
 
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
-          <div className="rounded-xl border border-hairline bg-surface-1 p-6 shadow-lift md:p-8">
+          <div className="rounded-xl border border-hairline bg-surface-1/70 p-7 md:p-8">
             <h2 className="text-display-md text-ink">Guardrails you control</h2>
             <p className="mt-3 max-w-2xl text-body-lg text-ink-subtle">
               Every tool call is gated by a permission mode, and you can tighten it further.

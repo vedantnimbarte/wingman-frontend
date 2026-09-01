@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
+import { ContextTax } from "@/components/sections/ContextTax";
 import { ProviderMarquee } from "@/components/sections/ProviderMarquee";
 import { PillarSection } from "@/components/sections/PillarSection";
 import { FeatureGrid } from "@/components/sections/FeatureGrid";
@@ -13,18 +14,18 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ContextTax />
+
+      {pillars.map((f, i) => (
+        <PillarSection key={f.id} feature={f} index={i} />
+      ))}
+
       <ProviderMarquee />
 
-      <div className="py-8">
-        {pillars.map((f, i) => (
-          <PillarSection key={f.id} feature={f} index={i} />
-        ))}
-      </div>
-
       <FeatureGrid
-        eyebrow="Built-in"
-        title="Everything else in the box"
-        lead="A batteries-included tool layer, MCP host, safety nets, and observability — all gated by the active permission mode."
+        eyebrow="Everything else"
+        title="The rest is table stakes — it has those too"
+        lead="A batteries-included tool layer, an MCP host and server, a multi-agent pilot, a board, a remote API, and safety nets — all gated by the active permission mode."
         features={secondaryFeatures}
       />
 
@@ -43,6 +44,7 @@ export default function HomePage() {
             name: product.name,
             applicationCategory: "DeveloperApplication",
             operatingSystem: "Linux, macOS, Windows",
+            softwareVersion: product.version,
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             description: product.positioning,
             url: product.repo,

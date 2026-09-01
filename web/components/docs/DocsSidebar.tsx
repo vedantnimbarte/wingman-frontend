@@ -8,11 +8,11 @@ import { cn } from "@/lib/cn";
 export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   return (
-    <nav aria-label="Documentation" className="space-y-7">
+    <nav aria-label="Documentation" className="space-y-9">
       {docsNav.map((group) => (
         <div key={group.group}>
-          <p className="mb-2 text-caption uppercase tracking-wide text-ink-tertiary">{group.group}</p>
-          <ul className="space-y-0.5">
+          <p className="label mb-3 text-ink-tertiary">{group.group}</p>
+          <ul className="space-y-px border-l border-hairline">
             {group.items.map((item) => {
               const active = pathname === item.href;
               return (
@@ -22,10 +22,10 @@ export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
                     onClick={onNavigate}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "block rounded-md px-3 py-1.5 text-body-sm transition-colors",
+                      "-ml-px block border-l py-1.5 pl-4 text-body-sm transition-colors duration-200 ease-soft",
                       active
-                        ? "bg-surface-2 font-medium text-ink"
-                        : "text-ink-subtle hover:bg-surface-1 hover:text-ink",
+                        ? "border-primary font-medium text-ink"
+                        : "border-transparent text-ink-subtle hover:border-hairline-strong hover:text-ink",
                     )}
                   >
                     {item.title}

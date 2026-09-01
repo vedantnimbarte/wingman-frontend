@@ -1,5 +1,6 @@
 // Message pillars + secondary features. Copy derives from the repo README
-// Highlights and docs/. `terminal` refers to a fixture in content/terminals.ts.
+// ("What makes it different") and docs/FEATURES.md. `terminal` refers to a
+// fixture in content/terminals.ts.
 
 export type Feature = {
   id: string;
@@ -10,102 +11,141 @@ export type Feature = {
   terminal?: string;
 };
 
+/**
+ * The five things the README claims comparable agents don't do. Order is the
+ * README's order and the argument's order — everything else is table stakes.
+ */
 export const pillars: Feature[] = [
   {
+    id: "resolve",
+    eyebrow: "Resolved, not matched",
+    title: "It asks the language server",
+    blurb:
+      "“Where is this used, and what breaks if I change it?” is a question a compiler can answer exactly. Most agents answer it by grepping and reading files until the context window fills. Wingman runs lsp_definition, lsp_references, lsp_hover, lsp_rename, and lsp_code_action through whatever language server is already on your PATH — 11 languages.",
+    points: [
+      "A rename is the language server's rename, not a find-and-replace that catches a comment.",
+      "Follows re-exports, aliases, and generic instantiations that name matching misses.",
+      "No server installed? The tools degrade to tree-sitter heuristics rather than failing.",
+    ],
+    terminal: "lsp",
+  },
+  {
+    id: "verify",
+    eyebrow: "Proof, not confidence",
+    title: "It has to prove the work before it says done",
+    blurb:
+      "The verification gate runs your build, the affected tests, and the language server's diagnostics for the changed files before the agent is allowed to end a turn. A change that introduces a type error the compile step missed fails verification.",
+    points: [
+      "✓ builds · ✓ affected tests · ✓ 0 new LSP diagnostics — the receipt, every turn.",
+      "On red it retries a bounded number of times, then stops and exits non-zero.",
+      "Bounded correction, not loop-until-green.",
+    ],
+    terminal: "verify",
+  },
+  {
     id: "providers",
-    eyebrow: "Provider-agnostic",
-    title: "73+ providers, one shape",
+    eyebrow: "No lock-in",
+    title: "73+ providers — and it prices the alternative for you",
     blurb:
-      "Anthropic is the reference implementation — streaming, tool use, explicit prompt caching. A single OpenAI-compatible adapter covers OpenAI, OpenRouter, LiteLLM, LM Studio, vLLM, and Ollama. Gemini and ChatGPT (OAuth) have their own adapters. All speak the same message contract.",
+      "One Message contract over Anthropic, OpenAI, ChatGPT (OAuth), Gemini, OpenRouter, LiteLLM, LM Studio, vLLM, and Ollama. That contract covers reasoning too: a single --reasoning off|low|medium|high maps onto Anthropic's thinking budget, OpenAI's reasoning_effort, and Gemini's thinkingConfig.",
     points: [
-      "Swap provider/model mid-session with /model — no restart, history preserved.",
-      "Bring your own key, or run fully local models. No lock-in.",
-      "Model fallback chains on primary failure.",
+      "wingman cost --compare reprices your real token volume against a spread of models.",
+      "Swap provider or model mid-session with /model — no restart, history preserved.",
+      "wingman doctor names the backends with no reasoning control, instead of letting the setting look like it took.",
     ],
-    terminal: "model",
+    terminal: "cost",
   },
   {
-    id: "surfaces",
-    eyebrow: "Three surfaces",
-    title: "A TUI, a one-shot, and a batch runner",
+    id: "memory",
+    eyebrow: "Between sessions",
+    title: "It remembers your repo, in files you can read",
     blurb:
-      "A ratatui-based TUI for interactive coding, a headless --print mode that emits text or newline-delimited JSON events, and a --batch mode that runs a file of prompts non-interactively. All ready to pipe into other tools or CI.",
+      "Memories are plain markdown under ~/.wingman/memory/ and <project>/.wingman/memory/ — readable, editable, deletable, and shareable over git with wingman memory sync. Plus a hybrid dense + BM25 index of the codebase and semantic recall across past sessions.",
     points: [
-      "wingman — interactive terminal UI.",
-      'wingman --print "…" — scriptable one-shot (add --json for events).',
-      "wingman --batch prompts.jsonl — non-interactive batch.",
-    ],
-    terminal: "print",
-  },
-  {
-    id: "learning",
-    eyebrow: "Self-improving",
-    title: "It learns you and your projects",
-    blurb:
-      "Persistent memories (markdown + frontmatter under ~/.wingman and <project>/.wingman), skill usage stats with outcome scoring, and cross-session semantic recall via the built-in RAG pipeline. Quiet-session nudges ask the agent to persist what it learned.",
-    points: [
-      "save_memory / recall_memory / recall_session tools.",
-      "Skills refined from observed work.",
-      "wingman knows — print what Wingman knows about this project.",
+      "Not an opaque store you have to trust — open the file and read it.",
+      "wingman knows prints the memories, skills, routing, and index freshness for this project.",
+      "Rate an answer with /feedback good|bad and that rating scores the skill outright.",
     ],
     terminal: "knows",
   },
   {
-    id: "pilot",
-    eyebrow: "Multi-agent · advanced",
-    title: "Pilot mode plans, delegates, and opens a PR",
+    id: "windows",
+    eyebrow: "First-class, not ported",
+    title: "Windows was a target from day one",
     blurb:
-      "wingman pilot run \"<goal>\" plans a multi-task goal, delegates to worker agents in isolated git worktrees, reviews as it goes, and converges into a pull request — with trust-tiered approval gates and cost estimates before it fires.",
+      "Developed and tested on Windows from the first commit rather than ported to it later. The one place that isn't yet true is shell containment — and wingman doctor reports exactly which containment is active on your machine instead of implying a sandbox that isn't there.",
     points: [
-      "Isolated worktrees per worker — no clobbering.",
-      "Trust-tiered approval: auto / notify-only / hard gate.",
-      "Upfront cost bands gate auto-approval on the worst case.",
+      "Prebuilt binaries for Linux (x86_64 / aarch64), macOS (Apple silicon), and Windows.",
+      "Keys go to the OS keyring — Credential Manager, Keychain, or Secret Service.",
+      "Known limits are documented in the README, not discovered in production.",
     ],
-    terminal: "pilot",
+    terminal: "doctor",
   },
 ];
 
+/** Table stakes, and the surfaces built on top. Full list in docs/FEATURES.md. */
 export const secondaryFeatures: Feature[] = [
   {
-    id: "mcp",
-    eyebrow: "MCP host",
-    title: "External MCP servers as first-class tools",
+    id: "pilot",
+    eyebrow: "Multi-agent",
+    title: "Pilot plans, delegates, and opens a PR",
     blurb:
-      "Declare Model Context Protocol servers under [mcp.<name>] (stdio or HTTP). Their tools are namespaced mcp__<server>__<tool> and dispatched like built-ins. Manage them live from the TUI with /mcp.",
+      "wingman pilot run \"<goal>\" plans a multi-task goal, spawns workers in isolated git worktrees, and converges them into one pull request. Three capability tiers — assist, copilot, autopilot — with cost bands shown before it fires. Tasks whose write-sets overlap are serialised, not raced.",
+  },
+  {
+    id: "board",
+    eyebrow: "Backlog",
+    title: "A kanban board over every pilot run",
+    blurb:
+      "wingman board is persistent and multi-project. Cards are goals you author; they outlive the runs that execute them. Columns are derived from run state, never stored, so the board can't disagree with pilot watch. Expand a card for each task's agent, model, cost, and transcript id.",
+  },
+  {
+    id: "serve",
+    eyebrow: "Remote control",
+    title: "Drive it from another machine, a phone, or CI",
+    blurb:
+      "wingman serve puts an HTTP/SSE API and a web panel in front of an allowlist of repos. Turns stream back over SSE, pilot runs are steerable, and a request can never obtain more authority than [serve].max_permission_mode. It does not terminate TLS — put it behind Tailscale or a proxy.",
+  },
+  {
+    id: "jobs",
+    eyebrow: "Background shell",
+    title: "Dev servers and cold builds, without blocking the turn",
+    blurb:
+      "run_shell blocks and caps at 600s, which rules out watch processes. background: true returns a job id instead; job_output, job_send, job_stop, and job_list control it — job_send writes to stdin, so a REPL can be driven across tool calls. Every job dies with the session.",
   },
   {
     id: "permissions",
     eyebrow: "Permission modes",
     title: "read-only · plan · auto-edit · yolo",
     blurb:
-      "read-only prompts on every write; plan requires an explicit plan first; auto-edit auto-allows writes inside the project tree; yolo removes prompts (per-session only). Switch live with /mode — it re-gates the running agent, not just the status line.",
+      "Each tool declares what it needs — read, write, shell, network — and the registry refuses anything the active mode doesn't grant. Enforced centrally, not per-tool. .git/, .wingman/config.toml, and .wingman/skills/ are never writable in any mode. There are no approval prompts by design: a disallowed call is refused, not queued.",
   },
   {
-    id: "login",
-    eyebrow: "Guided login",
-    title: "Keys in the OS keyring",
+    id: "trust",
+    eyebrow: "Untrusted config",
+    title: "A cloned repo can pick a model, not run commands",
     blurb:
-      "wingman login <provider> probes the key, stores it in the OS keyring, and records the default model. ChatGPT uses a browser OAuth flow. wingman logout clears it.",
+      "A project's .wingman/config.toml may set a model and tune the UI, but [hooks], [mcp], [verify], [providers], and permission_mode are ignored until you run wingman trust in that repo. Trust is pinned to the file's contents and lapses whenever it changes.",
   },
   {
-    id: "tools",
-    eyebrow: "Built-in tools",
-    title: "Read, search, edit, run — gated by mode",
+    id: "mcp",
+    eyebrow: "MCP, both ways",
+    title: "An MCP host and an MCP server",
     blurb:
-      "File read/write/edit, glob, grep, directory listing, shell execution, semantic search, atomic multi-file patches, and web fetch/search — each gated by the active permission mode.",
+      "Declare servers under [mcp.<name>] (stdio or HTTP) and their tools dispatch like built-ins, namespaced mcp__<server>__<tool>. Going the other way, wingman mcp-serve exposes Wingman's own tools — most valuably semantic_search over the warm repo index — to Claude Code, Cursor, or another Wingman.",
   },
   {
-    id: "checkpoints",
-    eyebrow: "Safety net",
-    title: "Checkpoints & undo",
+    id: "acp",
+    eyebrow: "Editors",
+    title: "One protocol instead of a plugin per editor",
     blurb:
-      "wingman checkpoint snapshots the working tree into a tagged git stash; wingman undo restores the most recent one. The apply_patch tool writes multi-file edits atomically — no partial writes on failure.",
+      "wingman acp speaks the Agent Client Protocol over stdio, so Zed, JetBrains, Neovim, and Emacs can drive Wingman as their agent. The editor can decline an individual tool call and serve reads from unsaved buffers — on top of Wingman's permission mode, so a client can narrow what the agent may do but never widen it.",
   },
   {
-    id: "cost",
-    eyebrow: "Observability",
-    title: "Per-model cost, live",
+    id: "hooks",
+    eyebrow: "Arriving from Claude Code",
+    title: "Run your existing hooks block as-is",
     blurb:
-      "wingman cost prints a per-model token + USD spend table from ~/.wingman/usage.json. A token-aware pipeline truncates tool output and compacts long histories to stay inside the model's context window.",
+      "[hooks].import_claude_code = true runs the hooks from an existing Claude Code settings.json. Matchers are translated (Bash → run_shell, Edit → edit_file) rather than copied, since a verbatim matcher would import cleanly and then never fire. Off by default — hooks run shell commands.",
   },
 ];

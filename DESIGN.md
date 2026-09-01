@@ -2,6 +2,51 @@
 
 > Reference design tokens for the Wingman marketing site. Dark-only. See `PRD.md` and `PLAN.md`.
 
+## Revision — the resolve system
+
+> This section supersedes the colour and typography values below, which record the
+> original Linear-derived reference. The structure (surface ladder, hairlines,
+> depth without drop shadows, terminal-as-screenshot) is unchanged.
+
+**Colour is structural.** The product's central opposition is guessing versus
+resolving, so the palette carries it: `{colors.unresolved}` (#8a90a6, cool slate)
+is what a name-match search returns; `{colors.resolved}` (#6b78e8, the brand
+lavender) is what the language server returns. Every before/after on the site —
+the hero headline, the hero drawing, the `grep` vs `lsp_references` terminal —
+uses that pair. `{colors.verify}` (#3ddc97) is reserved for the verification
+receipt and appears at most once per page.
+
+The canvas moved from #010102 to `{colors.canvas}` #06060b — a cool near-black
+with a real blue-violet undertone, deep enough to read as void but lifted enough
+that the hero's WebGL depth gradient survives on top of it.
+
+**Three type roles, three faces.** Inter-for-everything is the developer-site
+default. Display (headings, eyebrows) is now **Bricolage Grotesque**, whose
+condensed, slightly mechanical cut carries personality at 40–88px; it is used
+roughly eight times per page and never for body. **Inter** holds body and UI.
+**JetBrains Mono** holds terminals and any number that is a measurement — the
+context-tax figures are set in mono because they are measurements, not marketing.
+
+**Sections breathe on the canvas.** The previous page put every section inside its
+own bordered, rounded card, which is what made a spacious layout read as cramped.
+Sections are now separated by rhythm (`spacing.section` / `section-sm`) and a
+single opening `.rule` hairline. The `.plane` class is reserved for surfaces that
+genuinely lift — terminal captures, the install band.
+
+**Motion.** One easing (`transitionTimingFunction.soft`) for the whole site.
+Scroll reveals fail open twice over: hidden only behind `html.js`, and released by
+a timer if the observer never reports. `prefers-reduced-motion` short-circuits
+every reveal and skips the WebGL scene entirely.
+
+**The signature.** The hero is an orthographic WebGL drawing of the resolved
+symbol graph — real symbols from the Wingman codebase on three tiers (surfaces →
+loop → backends). A cloud of 47 unconnected name matches resolves into 12
+connected references. It is lazily imported, never part of the initial payload,
+and falls back to a server-rendered SVG of the same geometry on narrow screens,
+under reduced motion, or without WebGL.
+
+---
+
 ## Overview
 
 Linear's marketing canvas is the deepest dark surface in this collection — `{colors.canvas}` is #010102, essentially pure black with a faint blue tint. On top sits a four-step surface ladder (`{colors.surface-1}` through `{colors.surface-4}`) for cards, panels, and lifted tiles, with hairline borders running from `{colors.hairline}` (#23252a) up through `{colors.hairline-strong}` and `{colors.hairline-tertiary}`. Light gray text (`{colors.ink}` #f7f8f8) carries the body and headlines.

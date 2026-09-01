@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading, Eyebrow } from "@/components/ui/Text";
+import { Reveal } from "@/components/motion/Reveal";
 import type { Feature } from "@/content/features";
 
 export function FeatureGrid({
@@ -14,22 +15,31 @@ export function FeatureGrid({
   features: Feature[];
 }) {
   return (
-    <section className="py-16">
+    <section className="py-section">
       <Container>
-        <SectionHeading eyebrow={eyebrow} title={title} lead={lead} />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => (
-            <div
+        <div className="rule" />
+        <Reveal className="mt-12">
+          <SectionHeading eyebrow={eyebrow} title={title} lead={lead} />
+        </Reveal>
+
+        {/* Hairline-separated cells rather than nine bordered cards — the grid
+            reads as one table of contents, not a bag of tiles. */}
+        <ul className="mt-16 grid gap-px overflow-hidden rounded-lg border border-hairline bg-hairline sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((f, i) => (
+            <Reveal
+              as="li"
               key={f.id}
-              id={f.id}
-              className="scroll-mt-20 rounded-lg border border-hairline bg-surface-1 p-6 shadow-lift transition-colors hover:border-hairline-strong"
+              delay={Math.min(i, 5) * 45}
+              className="scroll-mt-24 bg-canvas p-8 transition-colors duration-300 ease-soft hover:bg-surface-1"
             >
-              <Eyebrow className="mb-3">{f.eyebrow}</Eyebrow>
-              <h3 className="text-card-title text-ink">{f.title}</h3>
-              <p className="mt-3 text-body-sm text-ink-subtle">{f.blurb}</p>
-            </div>
+              <div id={f.id}>
+                <Eyebrow className="mb-4 text-ink-tertiary">{f.eyebrow}</Eyebrow>
+                <h3 className="text-card-title text-ink">{f.title}</h3>
+                <p className="mt-3.5 text-body-sm text-ink-subtle">{f.blurb}</p>
+              </div>
+            </Reveal>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );

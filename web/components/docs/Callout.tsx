@@ -2,12 +2,20 @@ import { cn } from "@/lib/cn";
 
 type Variant = "note" | "tip" | "warning";
 
-// Palette stays within the design system: lavender + success + neutral.
-// No red/amber (DESIGN.md allows one accent + success only).
-const styles: Record<Variant, { border: string; icon: string; label: string; iconColor: string }> = {
-  note: { border: "border-l-primary", icon: "i", label: "Note", iconColor: "text-primary" },
-  tip: { border: "border-l-success", icon: "✓", label: "Tip", iconColor: "text-success" },
-  warning: { border: "border-l-hairline-strong", icon: "!", label: "Heads up", iconColor: "text-ink" },
+// Palette stays within the design system: the lavender accent, the single
+// `verify` mint, and neutrals. No red, no amber.
+const styles: Record<
+  Variant,
+  { rail: string; icon: string; label: string; tone: string }
+> = {
+  note: { rail: "bg-primary", icon: "i", label: "Note", tone: "text-primary" },
+  tip: { rail: "bg-verify", icon: "✓", label: "Tip", tone: "text-verify" },
+  warning: {
+    rail: "bg-hairline-strong",
+    icon: "!",
+    label: "Heads up",
+    tone: "text-ink",
+  },
 };
 
 export function Callout({
@@ -21,21 +29,24 @@ export function Callout({
 }) {
   const s = styles[variant];
   return (
-    <div className={cn("my-5 rounded-md border border-hairline border-l-2 bg-surface-1 p-4", s.border)}>
-      <div className="flex items-center gap-2">
-        <span
-          className={cn(
-            "grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hairline text-caption font-semibold",
-            s.iconColor,
-          )}
-          aria-hidden="true"
-        >
-          {s.icon}
-        </span>
-        <span className="text-body-sm font-medium text-ink">{title ?? s.label}</span>
-      </div>
-      <div className="mt-2 pl-7 text-body-sm text-ink-subtle [&_a]:link-emphasis [&_code]:text-ink">
-        {children}
+    <div className="my-7 flex max-w-prose gap-4 rounded-md border border-hairline bg-surface-1/60 p-5">
+      <span className={cn("w-px shrink-0 rounded-full", s.rail)} aria-hidden="true" />
+      <div className="min-w-0">
+        <div className="flex items-center gap-2.5">
+          <span
+            className={cn(
+              "grid h-5 w-5 shrink-0 place-items-center rounded-full border border-hairline text-caption font-semibold",
+              s.tone,
+            )}
+            aria-hidden="true"
+          >
+            {s.icon}
+          </span>
+          <span className="text-body-sm font-medium text-ink">{title ?? s.label}</span>
+        </div>
+        <div className="mt-2.5 text-body-sm text-ink-subtle [&_a]:link-emphasis [&_code]:text-ink">
+          {children}
+        </div>
       </div>
     </div>
   );

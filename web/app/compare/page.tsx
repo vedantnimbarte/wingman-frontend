@@ -38,7 +38,7 @@ export default function ComparePage() {
 
       <section className="py-10">
         <Container>
-          <div className="overflow-x-auto rounded-xl border border-hairline bg-surface-1 shadow-lift">
+          <div className="overflow-x-auto plane rounded-xl">
             <table className="w-full min-w-[720px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-hairline">

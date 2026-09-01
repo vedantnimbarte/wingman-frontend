@@ -9,6 +9,7 @@ export const colorClass: Record<string, string> = {
   ok: "text-success",
   path: "text-ink-muted",
   user: "text-primary-hover",
+  unres: "text-unresolved",
 };
 
 function renderSpan(span: Span, key: number) {

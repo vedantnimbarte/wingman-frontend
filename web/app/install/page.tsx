@@ -22,20 +22,35 @@ export default function InstallPage() {
       />
 
       {/* One-liner hero */}
-      <section className="py-12">
+      <section className="py-section-sm">
         <Container>
-          <CopyOneLiner command={product.installOneLiner} className="max-w-3xl text-body" />
-          <p className="mt-3 text-body-sm text-ink-tertiary">
-            Verify with <code className="font-mono text-ink-muted">wingman --version</code>.
+          <div className="grid max-w-4xl gap-6 md:grid-cols-2">
+            <div>
+              <p className="label mb-3 text-ink-tertiary">macOS · Linux</p>
+              <CopyOneLiner command={product.installOneLiner} />
+            </div>
+            <div>
+              <p className="label mb-3 text-ink-tertiary">Windows · PowerShell</p>
+              <CopyOneLiner
+                command={product.installWindows}
+                label="Copy Windows install command"
+              />
+            </div>
+          </div>
+          <p className="mt-5 text-body-sm text-ink-tertiary">
+            Verify with <code className="font-mono text-ink-muted">wingman --version</code>. Pin a
+            release with <code className="font-mono text-ink-muted">VERSION={product.version}</code>,
+            or change the target directory with{" "}
+            <code className="font-mono text-ink-muted">WINGMAN_INSTALL_DIR</code>.
           </p>
         </Container>
       </section>
 
       {/* Platform matrix */}
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
           <h2 className="text-display-md text-ink">Supported platforms</h2>
-          <div className="mt-8 overflow-x-auto rounded-xl border border-hairline bg-surface-1 shadow-lift">
+          <div className="mt-8 overflow-x-auto plane rounded-xl">
             <table className="w-full min-w-[560px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-hairline text-caption uppercase text-ink-tertiary">
@@ -75,7 +90,7 @@ export default function InstallPage() {
       </section>
 
       {/* Per-OS commands */}
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
           <div className="grid gap-4">
             {Object.values(installSteps).map((s) => (
@@ -89,7 +104,7 @@ export default function InstallPage() {
       </section>
 
       {/* First run */}
-      <section className="py-12">
+      <section className="py-section-sm">
         <Container>
           <h2 className="text-display-md text-ink">First run</h2>
           <ol className="mt-8 space-y-4">

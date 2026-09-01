@@ -14,7 +14,7 @@ export function ReferenceTable({
   codeFirst?: boolean;
 }) {
   return (
-    <div className="my-5 overflow-x-auto rounded-lg border border-hairline bg-surface-1 shadow-lift">
+    <div className="my-5 overflow-x-auto plane rounded-lg">
       <table className="w-full min-w-[480px] border-collapse text-left">
         <thead>
           <tr className="border-b border-hairline text-caption uppercase text-ink-tertiary">

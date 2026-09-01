@@ -24,7 +24,10 @@ export function DocHeading({
         as === "h2" ? "mt-12 text-display-md first:mt-0" : "mt-8 text-card-title",
       )}
     >
-      <a href={`#${anchor}`} className="relative no-underline">
+      {/* `.doc-prose a` colours body links lavender; a heading is not a body
+          link, so it opts out explicitly. Hover still tints it, which is the
+          affordance for the permalink. */}
+      <a href={`#${anchor}`} className="relative text-ink no-underline">
         {children}
         <span
           className="ml-2 text-ink-tertiary opacity-0 transition-opacity group-hover:opacity-100"
