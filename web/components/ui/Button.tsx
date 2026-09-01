@@ -5,18 +5,22 @@ type Variant = "primary" | "secondary" | "tertiary" | "inverse";
 type Size = "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md text-button font-medium transition-colors duration-150 whitespace-nowrap select-none no-underline";
+  "inline-flex items-center justify-center gap-2 rounded-md text-button font-medium " +
+  "whitespace-nowrap select-none no-underline transition-all duration-200 ease-soft " +
+  "active:translate-y-px";
 
 const sizes: Record<Size, string> = {
   // CTAs hold >= 40px tap height (PRD touch targets).
-  md: "px-3.5 py-2 min-h-[40px]",
-  lg: "px-5 py-2.5 min-h-[44px] text-[0.95rem]",
+  md: "px-4 py-2 min-h-[40px]",
+  lg: "px-6 py-3 min-h-[48px]",
 };
 
 const variants: Record<Variant, string> = {
-  primary: "bg-primary text-on-primary hover:bg-primary-hover active:bg-primary-focus",
-  secondary: "bg-surface-1 text-ink border border-hairline hover:border-hairline-strong hover:bg-surface-2",
-  tertiary: "bg-transparent text-ink hover:text-primary-hover",
+  primary:
+    "bg-primary text-on-primary shadow-glow hover:bg-primary-hover hover:shadow-[0_0_0_1px_rgba(143,155,255,0.4),0_24px_70px_-24px_rgba(107,120,232,0.55)] active:bg-primary-focus",
+  secondary:
+    "bg-surface-1 text-ink border border-hairline hover:border-hairline-strong hover:bg-surface-2",
+  tertiary: "bg-transparent text-ink-subtle hover:text-ink",
   inverse: "bg-inverse-canvas text-inverse-ink hover:bg-white/90",
 };
 

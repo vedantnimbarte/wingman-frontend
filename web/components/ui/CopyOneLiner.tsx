@@ -5,8 +5,8 @@ import { cn } from "@/lib/cn";
 import { track } from "@/lib/analytics";
 
 /**
- * The install one-liner in a mono chip with a one-click copy button.
- * Copy success is announced to screen readers via aria-live.
+ * An install one-liner in a mono chip with one-click copy. Copy success is
+ * announced to screen readers via aria-live.
  */
 export function CopyOneLiner({
   command,
@@ -33,11 +33,12 @@ export function CopyOneLiner({
   return (
     <div
       className={cn(
-        "flex items-center gap-3 rounded-md border border-hairline bg-surface-1 pl-4 pr-2 py-2",
+        "group flex items-center gap-3 rounded-md border border-hairline bg-surface-1/70 py-2 pl-4 pr-2",
+        "transition-colors duration-200 ease-soft hover:border-hairline-strong",
         className,
       )}
     >
-      <span className="select-none text-ink-tertiary" aria-hidden="true">
+      <span className="select-none font-mono text-mono text-primary/70" aria-hidden="true">
         $
       </span>
       <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-mono text-ink-muted [scrollbar-width:none]">
@@ -47,7 +48,7 @@ export function CopyOneLiner({
         type="button"
         onClick={copy}
         aria-label={label}
-        className="shrink-0 rounded-md border border-hairline bg-surface-2 px-3 py-1.5 text-button text-ink transition-colors hover:border-hairline-strong hover:text-primary-hover"
+        className="shrink-0 rounded-md border border-hairline bg-surface-2 px-3.5 py-2 text-button text-ink-subtle transition-colors duration-200 ease-soft hover:border-hairline-strong hover:text-ink"
       >
         {copied ? "Copied" : "Copy"}
       </button>

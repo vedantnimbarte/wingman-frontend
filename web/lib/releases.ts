@@ -12,6 +12,19 @@ export type Release = {
 // unavailable or rate-limited at build time.
 const fallback: Release[] = [
   {
+    tag: "v0.2.0",
+    name: "v0.2.0",
+    date: "2026-08-20",
+    url: `${product.repo}/releases/tag/v0.2.0`,
+    highlights: [
+      "LSP-backed code intelligence across 11 languages, with tree-sitter fallback.",
+      "The verification gate folds LSP diagnostics for changed files into the verdict.",
+      "Pilot mode, the board, and `wingman serve` with an HTTP/SSE API and web panel.",
+      "Background shell jobs, `run_plan`, and a Claude Code hooks bridge.",
+      "`wingman cost --compare` reprices your token volume against other models.",
+    ],
+  },
+  {
     tag: "v0.1.0",
     name: "v0.1.0 — first release",
     date: "2026-07-08",

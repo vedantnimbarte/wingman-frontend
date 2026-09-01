@@ -16,18 +16,18 @@ export function TopNav({ stars = 0 }: { stars?: number }) {
   const starLabel = stars > 0 ? formatCount(stars) : null;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-hairline/60 bg-canvas/85 backdrop-blur-md">
-      <Container className="flex h-14 items-center justify-between gap-4">
-        <div className="flex items-center gap-8">
+    <header className="sticky top-0 z-50 border-b border-hairline/50 bg-canvas/70 backdrop-blur-xl">
+      <Container className="flex h-16 items-center justify-between gap-4">
+        <div className="flex items-center gap-10">
           <Wordmark />
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
             {navLinks.map((l) => (
               <Link
                 key={l.label}
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noreferrer noopener" : undefined}
-                className="text-body-sm text-ink-subtle transition-colors hover:text-ink"
+                className="text-body-sm text-ink-subtle transition-colors duration-200 ease-soft hover:text-ink"
               >
                 {l.label}
                 {l.external ? <span aria-hidden="true"> ↗</span> : null}
@@ -37,10 +37,9 @@ export function TopNav({ stars = 0 }: { stars?: number }) {
         </div>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button href={product.repo} external variant="secondary" analytics="nav_github">
+          <Button href={product.repo} external variant="tertiary" analytics="nav_github">
             <GitHubIcon />
-            Star
-            {starLabel ? <span className="text-ink-subtle">{starLabel}</span> : null}
+            {starLabel ? <span className="figure text-caption">{starLabel}</span> : "GitHub"}
           </Button>
           <Button href="/install" variant="primary" analytics="nav_install">
             Install
@@ -49,22 +48,37 @@ export function TopNav({ stars = 0 }: { stars?: number }) {
 
         <button
           type="button"
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md text-ink"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-md text-ink md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
           <span className="relative block h-4 w-5">
-            <span className={cn("absolute left-0 top-0 h-0.5 w-5 bg-ink transition-transform", open && "translate-y-[7px] rotate-45")} />
-            <span className={cn("absolute left-0 top-1.5 h-0.5 w-5 bg-ink transition-opacity", open && "opacity-0")} />
-            <span className={cn("absolute left-0 top-3 h-0.5 w-5 bg-ink transition-transform", open && "-translate-y-[5px] -rotate-45")} />
+            <span
+              className={cn(
+                "absolute left-0 top-0 h-px w-5 bg-ink transition-transform duration-300 ease-soft",
+                open && "translate-y-[7px] rotate-45",
+              )}
+            />
+            <span
+              className={cn(
+                "absolute left-0 top-1.5 h-px w-5 bg-ink transition-opacity duration-200",
+                open && "opacity-0",
+              )}
+            />
+            <span
+              className={cn(
+                "absolute left-0 top-3 h-px w-5 bg-ink transition-transform duration-300 ease-soft",
+                open && "-translate-y-[5px] -rotate-45",
+              )}
+            />
           </span>
         </button>
       </Container>
 
       {open ? (
-        <div className="md:hidden border-t border-hairline/60 bg-canvas">
-          <Container className="flex flex-col gap-1 py-4">
+        <div className="border-t border-hairline/50 bg-canvas md:hidden">
+          <Container className="flex flex-col gap-1 py-5">
             {navLinks.map((l) => (
               <Link
                 key={l.label}
@@ -72,14 +86,20 @@ export function TopNav({ stars = 0 }: { stars?: number }) {
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noreferrer noopener" : undefined}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-2.5 text-body text-ink-muted hover:bg-surface-1 hover:text-ink"
+                className="rounded-md px-2 py-3 text-body text-ink-muted hover:bg-surface-1 hover:text-ink"
               >
                 {l.label}
                 {l.external ? <span aria-hidden="true"> ↗</span> : null}
               </Link>
             ))}
-            <div className="mt-3 flex flex-col gap-2">
-              <Button href={product.repo} external variant="secondary" size="lg" analytics="nav_github">
+            <div className="mt-4 flex flex-col gap-2">
+              <Button
+                href={product.repo}
+                external
+                variant="secondary"
+                size="lg"
+                analytics="nav_github"
+              >
                 <GitHubIcon />
                 Star on GitHub{starLabel ? ` · ${starLabel}` : ""}
               </Button>

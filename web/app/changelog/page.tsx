@@ -27,7 +27,7 @@ export default async function ChangelogPage() {
         </Container>
       </section>
 
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
           <div className="mx-auto max-w-3xl">
             {releases.map((r) => (

@@ -53,11 +53,11 @@ export default function ProvidersPage() {
         lead="Anthropic is the reference implementation; a single OpenAI-compatible adapter covers most of the rest; Gemini and ChatGPT have their own. All speak one message contract — swap any time, no lock-in."
       />
 
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
           <div className="space-y-8">
             {groups.map((g) => (
-              <div key={g.heading} className="rounded-xl border border-hairline bg-surface-1 p-6 shadow-lift md:p-8">
+              <div key={g.heading} className="rounded-xl border border-hairline bg-surface-1/70 p-7 md:p-8">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h2 className="text-card-title text-ink">{g.heading}</h2>
                   <p className="text-body-sm text-ink-tertiary">{g.note}</p>

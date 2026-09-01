@@ -8,7 +8,7 @@ import { pillars, secondaryFeatures } from "@/content/features";
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Provider-agnostic, terminal-first, self-improving, multi-agent. Everything Wingman does, in depth.",
+    "Resolved code intelligence, a verification gate, 73+ providers, and a memory you can read. Everything Wingman does, in depth.",
 };
 
 export default function FeaturesPage() {
@@ -16,20 +16,18 @@ export default function FeaturesPage() {
     <>
       <PageHeader
         eyebrow="Features"
-        title="One agent. Every provider. Your terminal."
-        lead="Wingman pairs a fast terminal UI with a batteries-included tool layer, a memory that compounds across sessions, and an optional multi-agent pilot — without tying you to a single model vendor."
+        title="Five things comparable agents don't do"
+        lead="Everything else Wingman does is table stakes, and it has those too. These are the differences worth the switch — each one a claim you can check against the code."
       />
 
-      <div className="py-6">
-        {pillars.map((f, i) => (
-          <PillarSection key={f.id} feature={f} index={i} />
-        ))}
-      </div>
+      {pillars.map((f, i) => (
+        <PillarSection key={f.id} feature={f} index={i} />
+      ))}
 
       <FeatureGrid
-        eyebrow="More"
-        title="The rest of the toolkit"
-        lead="MCP host, permission modes, guided login, checkpoints, cost tracking, and the built-in tools — each gated by the active permission mode."
+        eyebrow="Table stakes"
+        title="And the rest of the toolkit"
+        lead="A multi-agent pilot, a cross-repo board, a remote HTTP API, background shell jobs, an MCP host and server, and the permission model that gates all of it."
         features={secondaryFeatures}
       />
 

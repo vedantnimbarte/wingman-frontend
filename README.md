@@ -10,7 +10,7 @@ A dark, [Linear](https://linear.app)-inspired site built with **Next.js 14 (App 
 
 - **Live product:** https://github.com/vedantnimbarte/Wingman
 - **Stack:** Next.js 14 · React 18 · TypeScript · Tailwind CSS 3
-- **Theme:** dark-only, single lavender accent, terminal captures as the hero visual
+- **Theme:** dark-only; a semantic colour pair (`unresolved` slate / `resolved` lavender) that carries the product's argument; terminal captures and a WebGL symbol graph as the hero visuals
 - **License:** MIT
 
 ---
@@ -48,13 +48,13 @@ It is a **marketing + docs** site. Exhaustive product internals (crate-level arc
 
 ## Highlights
 
-- **Dark, restrained design system** — near-black canvas (`#010102`), a single lavender-blue accent (`#5e6ad2`) used only for the brand mark, primary CTAs, focus rings, and link emphasis. A four-step surface ladder carries depth without drop shadows.
+- **Dark, restrained design system** — a cool near-black canvas (`#06060b`) with a lavender accent (`#6b78e8`). Colour is structural, not decorative: `unresolved` (slate `#8a90a6`) is what a name-match search returns, `resolved` (the lavender) is what the language server returns, and every before/after on the site uses that pair. A four-step surface ladder carries depth without drop shadows.
 - **Terminal captures as the "product screenshot"** — Wingman's TUI, headless `--print --json`, and `pilot` runs are rendered as **real, selectable text** (crisp at any DPI, theme-consistent, lightweight) rather than raster images.
 - **A full documentation portal** — persistent sidebar, **⌘K full-text search** (Pagefind), scroll-spy "on this page" TOC, callouts, **build-time syntax highlighting** (Shiki), copy-enabled code blocks, heading permalinks, prev/next paging, a "Copy for LLM" button, and a mobile drawer.
 - **Marketing depth** — an animated hero terminal, a competitor comparison, a use-case cookbook, a providers showcase, a security page, and a live GitHub-stars social-proof strip.
 - **Discoverable** — RSS feed for the changelog, an `llms.txt` for AI crawlers, branded Open Graph images, and opt-in, cookieless analytics (off by default).
-- **Static & fast** — every page is prerendered; ~87–95 kB First Load JS; only two client components ship interactivity (the nav menu and the copy button, plus the docs search/sidebar).
-- **Self-hosted fonts** — Inter + JetBrains Mono via `next/font`; no external network requests at runtime.
+- **Static & fast** — every page is prerendered; ~95–99 kB First Load JS. The hero's WebGL scene is a separate lazily-imported chunk (~130 kB gzipped) that never enters the initial payload and is skipped entirely on narrow screens and under `prefers-reduced-motion`.
+- **Self-hosted fonts** — Bricolage Grotesque (display), Inter (body/UI), and JetBrains Mono (terminals and measurements) via `next/font`; no external network requests at runtime.
 - **Single source of truth for facts** — all product copy (providers, platforms, commands) flows from typed `content/*.ts` modules, kept in sync with the product repo.
 - **Accessible** — WCAG-minded: skip link, visible focus ring, landmarks, `aria-*` on interactive elements, `prefers-reduced-motion` respected, real-text terminals.
 
@@ -143,16 +143,17 @@ Derived from [`DESIGN.md`](DESIGN.md) and encoded in [`web/tailwind.config.ts`](
 
 | Token | Value | Use |
 |---|---|---|
-| `canvas` | `#010102` | Page background (never `#000000`) |
-| `surface-1…4` | `#08090a` → `#202123` | Lifted panels, cards, menus |
-| `hairline` / `-strong` | `#23252a` / `#31333a` | 1px borders |
-| `ink` / `-muted` / `-subtle` / `-tertiary` | `#f7f8f8` → `#62666d` | Text hierarchy |
-| `primary` / `-hover` / `-focus` | `#5e6ad2` / `#828fff` / `#5e69d1` | The lavender accent |
-| `success` | `#27a644` | The only semantic color |
+| `canvas` | `#06060b` | Page background (never `#000000`) |
+| `surface-1…4` | `#0b0b13` → `#232331` | Lifted planes, panels, menus |
+| `hairline` / `-strong` | `#22222e` / `#32323f` | 1px borders |
+| `ink` / `-muted` / `-subtle` / `-tertiary` | `#f5f6fa` → `#5c6076` | Text hierarchy |
+| `primary` / `-hover` / `-focus` | `#6b78e8` / `#8f9bff` / `#5e6ad2` | The lavender accent |
+| `unresolved` / `resolved` | `#8a90a6` / `#6b78e8` | The semantic pair — grep vs. the language server |
+| `verify` | `#3ddc97` | The verification receipt, and nothing else |
 
-**Type** — a token scale (`display-xl` → `caption`, plus `eyebrow`, `button`, `mono`) where each token carries size + line-height + letter-spacing + weight. Display sizes use `clamp()` so headlines scale from 80px to ~36px on mobile automatically. Fonts: **Inter** (sans) + **JetBrains Mono** (mono).
+**Type** — a token scale (`display-xl` → `caption`, plus `eyebrow`, `button`, `mono`) where each token carries size + line-height + letter-spacing + weight. Display sizes use `clamp()` so headlines scale from 88px to ~40px on mobile automatically. Three roles, three faces: **Bricolage Grotesque** (display — headings and eyebrows only), **Inter** (body and UI), **JetBrains Mono** (terminals, and any number that is a measurement).
 
-**Guardrails** (enforced in review): lavender only on mark/CTA/focus/link · one accent + success only · no drop shadows (surface ladder + hairline + top-edge highlight) · `rounded-md` CTAs, never pill · dark theme only · `#010102`, never `#000000`.
+**Guardrails** (enforced in review): the display face on headings and eyebrows only, never body · `unresolved`/`resolved` used for the argument, never decoration · `verify` at most once per page · sections separated by rhythm and one opening `.rule`, not by giving each its own bordered card · `rounded-md` CTAs, never pill · dark theme only · `#06060b`, never `#000000`.
 
 See [`docs/DESIGN-TOKENS.md`](docs/DESIGN-TOKENS.md) for the full reference.
 
@@ -207,7 +208,7 @@ Notes:
 
 ## Performance & accessibility
 
-- **Static prerender**, no runtime server. First Load JS ~87–95 kB.
+- **Static prerender**, no runtime server. First Load JS ~95–99 kB; the WebGL scene loads lazily on top of that, or not at all.
 - **Client JS only where needed** — nav menu, copy buttons, docs search/sidebar/TOC. The site is fully readable and the install command is selectable without JS.
 - **Self-hosted fonts** (`next/font`) — no external requests; `display: swap`.
 - **Accessibility** — skip-to-content link, single visible focus ring, semantic landmarks, `aria-*` on interactive elements, `prefers-reduced-motion` honored, real-text terminals with summaries.

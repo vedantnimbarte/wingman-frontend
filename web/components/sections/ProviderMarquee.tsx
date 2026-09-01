@@ -1,27 +1,24 @@
 import { Container } from "@/components/ui/Container";
+import { Reveal } from "@/components/motion/Reveal";
 import { providers, providerCaption } from "@/content/providers";
 
 export function ProviderMarquee() {
   return (
-    <section className="border-y border-hairline/50 py-14">
+    <section className="py-section-sm">
       <Container>
-        <p className="text-center text-eyebrow uppercase text-ink-tertiary">
-          One interface for every model
-        </p>
-        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3">
-          {providers.map((p) => (
-            <li
-              key={p.name}
-              className="rounded-xs px-4 py-3 text-center sm:text-left"
-            >
-              <span className="text-body font-medium text-ink">{p.name}</span>
-              <span className="mt-0.5 block text-caption text-ink-tertiary">{p.note}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-body-sm text-ink-subtle">
-          {providerCaption}
-        </p>
+        <div className="rule" />
+        <Reveal className="mt-10">
+          <p className="label text-ink-tertiary">One contract for every model</p>
+          <ul className="mt-8 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
+            {providers.map((p) => (
+              <li key={p.name}>
+                <span className="text-body font-medium text-ink">{p.name}</span>
+                <span className="mt-1 block text-caption text-ink-tertiary">{p.note}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-10 max-w-prose text-body-sm text-ink-subtle">{providerCaption}</p>
+        </Reveal>
       </Container>
     </section>
   );

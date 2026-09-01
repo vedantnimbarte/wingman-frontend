@@ -8,24 +8,25 @@ import { product } from "@/content/product";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Why Wingman exists: an open, provider-agnostic, terminal-first coding agent that learns — with honest boundaries on what ships today.",
+    "Why Wingman exists: a terminal coding agent that resolves code through the language server, proves its work before finishing, and names its own limits.",
 };
 
 const shipsToday = [
-  "Interactive TUI, headless --print, and --batch runner",
-  "73+ providers behind one streaming interface",
-  "Built-in tool layer (read/write/edit, grep, shell, semantic search, web)",
-  "MCP host for external servers",
-  "Learning loop: memories, skills, cross-session recall",
-  "Permission modes with live /mode re-gating",
-  "Checkpoints & undo, cost tracking, session fork/resume",
-  "Pilot mode (advanced): plan → delegate → PR",
+  "LSP-backed resolution across 11 languages, with tree-sitter fallback",
+  "A verification gate: build, affected tests, and LSP diagnostics before a turn ends",
+  "73+ providers behind one Message contract, hosted or fully local",
+  "wingman context and wingman cost --compare — the numbers, printed",
+  "Memories and skills as plain markdown you can read, edit, and share over git",
+  "Pilot mode, the board, and wingman serve (HTTP/SSE + web panel)",
+  "Background shell jobs, run_plan, and a Claude Code hooks bridge",
+  "MCP host and MCP server; ACP for Zed, JetBrains, Neovim, and Emacs",
 ];
 
-const planned = [
-  "More pilot daemon discovery sources (CI failures, dependabot, coverage gaps)",
-  "Richer verification receipts and team-shared memory",
-  "Expanded provider-native adapters",
+const knownLimits = [
+  "Shell containment on Windows uses a Job Object — it contains the process, not its file access",
+  "The local-first router preset is a starting config, not a switch that redirects live traffic",
+  "Pilot's copilot tier is user-validated against live providers, not CI-validated",
+  "Visual verification needs an opt-in --features browser build, and fails open without one",
 ];
 
 export default function AboutPage() {
@@ -33,44 +34,49 @@ export default function AboutPage() {
     <>
       <PageHeader
         eyebrow="About"
-        title="An open alternative, built in the open."
-        lead="Wingman is a terminal-first coding agent that doesn't lock you to one model vendor — and gets better at helping you the more you use it."
+        title="Built to be checked, not trusted."
+        lead="Wingman is a terminal coding agent that resolves your code through the language server, proves a change before it says done, and prints the numbers other agents keep to themselves."
       />
 
-      <section className="py-12">
+      <section className="py-section-sm">
         <Container>
           <div className="mx-auto max-w-3xl space-y-6 text-body-lg text-ink-muted">
             <p>
-              Most coding agents pick a model for you and keep your context in
-              their cloud. Wingman does the opposite: it speaks to{" "}
-              <span className="text-ink">73+ providers</span> — hosted or fully
-              local — through one streaming interface, keeps your keys in the OS
-              keyring, and stores what it learns as plain markdown in your own{" "}
-              <code className="font-mono text-body text-ink">~/.wingman</code>{" "}
-              directory.
+              &ldquo;Where is this used, and what breaks if I change it?&rdquo; is a
+              question a compiler can answer exactly. Most agents answer it by
+              grepping and reading files until the context window fills. Wingman
+              asks the <span className="text-ink">language server</span> and a local
+              semantic index, so it resolves imports, types, and re-exports rather
+              than matching names — and spends a fraction of the context doing it.
             </p>
             <p>
-              It&rsquo;s <span className="text-ink">terminal-first</span> because
-              that&rsquo;s where the work happens — a fast TUI for interactive
-              sessions, and headless modes that pipe cleanly into scripts and CI.
-              And it&rsquo;s <span className="text-ink">self-improving</span>:
-              persistent memories, skills refined from real work, and semantic
-              recall across sessions and projects.
+              It also has to <span className="text-ink">prove the work</span>. The
+              verification gate runs your build, the affected tests, and the language
+              server&rsquo;s diagnostics for the changed files before the agent may end
+              a turn. On red it retries a bounded number of times, then stops and exits
+              non-zero. Bounded correction, not loop-until-green.
+            </p>
+            <p>
+              And there is <span className="text-ink">no lock-in</span>: one message
+              contract over 73+ providers, hosted or fully local, with your keys in
+              the OS keyring and what it learns stored as plain markdown under{" "}
+              <code className="font-mono text-body text-ink">~/.wingman</code> — files
+              you can read, edit, delete, and share over git.
             </p>
           </div>
         </Container>
       </section>
 
       {/* Honesty section */}
-      <section className="py-12">
+      <section className="py-section-sm">
         <Container>
           <h2 className="text-display-md text-ink">Honest about what ships</h2>
           <p className="mt-3 max-w-2xl text-body-lg text-ink-subtle">
-            We&rsquo;d rather under-promise. Here&rsquo;s what&rsquo;s in your
-            hands today versus what&rsquo;s still on the roadmap.
+An agent that will not tell you where it is weak is asking you to
+            trust it anyway. Here is what ships, and where the edges are.
           </p>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
-            <div className="rounded-lg border border-hairline bg-surface-1 p-6 shadow-lift">
+            <div className="rounded-lg border border-hairline bg-surface-1/70 p-7">
               <h3 className="text-card-title text-ink">Ships today</h3>
               <ul className="mt-4 space-y-2.5">
                 {shipsToday.map((s) => (
@@ -81,10 +87,10 @@ export default function AboutPage() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-lg border border-hairline bg-surface-1 p-6 shadow-lift">
-              <h3 className="text-card-title text-ink">Planned</h3>
+            <div className="rounded-lg border border-hairline bg-surface-1/70 p-7">
+              <h3 className="text-card-title text-ink">Known limits</h3>
               <ul className="mt-4 space-y-2.5">
-                {planned.map((s) => (
+                {knownLimits.map((s) => (
                   <li key={s} className="flex gap-3 text-body-sm text-ink-muted">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink-tertiary" aria-hidden="true" />
                     <span>{s}</span>
@@ -97,7 +103,7 @@ export default function AboutPage() {
       </section>
 
       {/* Architecture + open source */}
-      <section className="py-12">
+      <section className="py-section-sm">
         <Container>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-lg border border-hairline bg-surface-1 p-8 shadow-lift">

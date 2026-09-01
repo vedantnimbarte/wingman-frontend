@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { sans, mono } from "@/lib/fonts";
+import { display, sans, mono } from "@/lib/fonts";
 import { TopNav } from "@/components/nav/TopNav";
 import { Footer } from "@/components/footer/Footer";
 import { Analytics } from "@/components/Analytics";
@@ -8,13 +8,15 @@ import { product } from "@/content/product";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#010102",
+  themeColor: "#06060b",
 };
+
+const title = "Wingman — the coding agent that resolves instead of guessing";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wingman.dev"),
   title: {
-    default: "Wingman — the open coding agent for your terminal",
+    default: title,
     template: "%s · Wingman",
   },
   description: product.positioning,
@@ -22,6 +24,8 @@ export const metadata: Metadata = {
   keywords: [
     "coding agent",
     "terminal AI",
+    "LSP",
+    "language server",
     "CLI",
     "open source",
     "Claude Code alternative",
@@ -32,14 +36,14 @@ export const metadata: Metadata = {
     "MCP",
   ],
   openGraph: {
-    title: "Wingman — the open coding agent for your terminal",
+    title,
     description: product.positioning,
     type: "website",
     siteName: product.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wingman — the open coding agent for your terminal",
+    title,
     description: product.positioning,
   },
   robots: { index: true, follow: true },
@@ -51,8 +55,15 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { stars } = await getRepoStats();
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${sans.variable} ${mono.variable}`}>
       <body className="min-h-screen">
+        {/* Scroll-reveal hides content only when JS can un-hide it. Runs before
+            the page below it parses, so nothing flashes. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-surface-2 focus:px-4 focus:py-2 focus:text-body-sm focus:text-ink"

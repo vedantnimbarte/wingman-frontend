@@ -22,7 +22,7 @@ export default function UseCasesPage() {
         lead="A few ways teams put Wingman to work — from CI review to multi-agent features to fully-offline coding."
       />
 
-      <section className="py-8">
+      <section className="py-section-sm">
         <Container>
           <div className="space-y-6">
             {useCases.map((uc, i) => {
@@ -31,7 +31,7 @@ export default function UseCasesPage() {
                 <div
                   key={uc.id}
                   id={uc.id}
-                  className="grid items-start gap-8 rounded-xl border border-hairline bg-surface-1 p-6 shadow-lift md:p-8 lg:grid-cols-2"
+                  className="grid items-start gap-8 rounded-xl border border-hairline bg-surface-1/70 p-7 md:p-8 lg:grid-cols-2"
                 >
                   <div>
                     <Eyebrow>{`Recipe ${String(i + 1).padStart(2, "0")}`}</Eyebrow>
