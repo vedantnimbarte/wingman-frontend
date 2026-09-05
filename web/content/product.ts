@@ -17,7 +17,7 @@ export const product = {
   discussions: "https://github.com/vedantnimbarte/Wingman/discussions",
   releases: "https://github.com/vedantnimbarte/Wingman/releases",
   license: "MIT OR Apache-2.0",
-  version: "v0.2.0",
+  version: "v0.3.0",
   installOneLiner:
     "curl -fsSL https://raw.githubusercontent.com/vedantnimbarte/Wingman/main/scripts/install.sh | sh",
   installWindows:

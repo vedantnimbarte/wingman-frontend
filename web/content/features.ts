@@ -107,6 +107,13 @@ export const secondaryFeatures: Feature[] = [
       "wingman serve puts an HTTP/SSE API and a web panel in front of an allowlist of repos. Turns stream back over SSE, pilot runs are steerable, and a request can never obtain more authority than [serve].max_permission_mode. It does not terminate TLS — put it behind Tailscale or a proxy.",
   },
   {
+    id: "notifications",
+    eyebrow: "It asks, from anywhere",
+    title: "A plan waiting on you shouldn't wait in a terminal you closed",
+    blurb:
+      "A detached pilot run, a worker, and a serve child share no terminal, so an agent that needs a decision has nowhere to ask. Notifications are a file inbox under ~/.wingman/ instead of a daemon — which is why a card raised by any of them reaches the popup in the corner of your screen, and the web panel, and can be answered in either. Approving writes the run's own control.jsonl, the file it was already waiting on.",
+  },
+  {
     id: "jobs",
     eyebrow: "Background shell",
     title: "Dev servers and cold builds, without blocking the turn",

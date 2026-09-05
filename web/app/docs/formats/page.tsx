@@ -24,7 +24,7 @@ export default function Formats() {
         <Code>--print</Code> runs a single prompt and exits. Pipe the text straight into other tools:
       </p>
       <CodeBlock>{`wingman --print "summarize the changes on this branch"
-wingman --print --mode auto-edit "add a CHANGELOG entry for v0.2.0"`}</CodeBlock>
+wingman --print --mode auto-edit "add a CHANGELOG entry for v0.3.0"`}</CodeBlock>
 
       <DocHeading as="h2" id="json">JSON events</DocHeading>
       <p>
