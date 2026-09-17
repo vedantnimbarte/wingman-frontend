@@ -1,9 +1,7 @@
 import { getReleases } from "@/lib/releases";
-import { product } from "@/content/product";
+import { product, SITE } from "@/content/product";
 
 export const dynamic = "force-static";
-
-const SITE = "https://wingman.dev";
 
 function esc(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -13,7 +11,7 @@ export async function GET() {
   const releases = await getReleases();
   const items = releases
     .map((r) => {
-      const desc = r.highlights.join(" · ");
+      const desc = r.highlights.join(" ");
       return `    <item>
       <title>${esc(r.name)}</title>
       <link>${r.url}</link>
@@ -27,9 +25,9 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Wingman — Changelog</title>
+    <title>Wingman changelog</title>
     <link>${SITE}/changelog</link>
-    <description>Releases of ${esc(product.name)}, the open coding agent for your terminal.</description>
+    <description>Releases of ${esc(product.name)}, the terminal coding agent that asks the compiler instead of guessing.</description>
     <language>en</language>
 ${items}
   </channel>

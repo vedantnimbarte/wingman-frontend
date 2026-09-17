@@ -1,9 +1,7 @@
-import { product } from "@/content/product";
+import { product, SITE } from "@/content/product";
 import { docsNav } from "@/content/docs-nav";
 
 export const dynamic = "force-static";
-
-const SITE = "https://wingman.dev";
 
 // Follows the llms.txt convention (https://llmstxt.org): a Markdown map of the
 // site for AI crawlers and assistants.
@@ -11,8 +9,7 @@ export async function GET() {
   const sections = docsNav
     .map((group) => {
       const links = group.items
-        .filter((i) => i.href.startsWith("/"))
-        .map((i) => `- [${i.title}](${SITE}${i.href})${i.keywords ? `: ${i.keywords}` : ""}`)
+        .map((i) => `- [${i.title}](${SITE}${i.href})${i.summary ? `: ${i.summary}` : ""}`)
         .join("\n");
       return `## ${group.group}\n\n${links}`;
     })
@@ -22,23 +19,17 @@ export async function GET() {
 
 > ${product.positioning}
 
-Wingman is an open-source, terminal-first coding agent written in Rust. Free,
-provider-agnostic (73+ LLM providers), and self-hostable. License: ${product.license}.
+Wingman is an open-source, terminal-first coding agent written in Rust. It works with
+hosted or local model providers. License: ${product.license}. Latest release: ${product.version}.
 
 - Repository: ${product.repo}
 - Install: ${product.installOneLiner}
 
 ${sections}
 
-## Marketing
+## Site
 
-- [Home](${SITE}/)
-- [Features](${SITE}/features)
-- [Compare](${SITE}/compare): vs Claude Code, Cursor, Aider
-- [Use cases](${SITE}/use-cases)
-- [Providers](${SITE}/providers)
-- [Security & privacy](${SITE}/security)
-- [Install](${SITE}/install)
+- [Home](${SITE}/): what Wingman is, how one turn works, and how to start
 - [Changelog](${SITE}/changelog)
 `;
 

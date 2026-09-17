@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
+import { SITE } from "@/content/product";
 
-const SITE = "https://wingman.dev";
 
 /**
  * "Copy for LLM" — copies a compact Markdown summary of the page (title,
@@ -33,11 +33,7 @@ export function CopyMarkdown({
   }
 
   return (
-    <button
-      type="button"
-      onClick={copy}
-      className="inline-flex items-center gap-1.5 rounded-md border border-hairline bg-surface-1 px-2.5 py-1 text-caption text-ink-subtle transition-colors hover:border-hairline-strong hover:text-ink"
-    >
+    <button type="button" onClick={copy} className="text-btn" data-pagefind-ignore>
       {copied ? "Copied" : "Copy for LLM"}
     </button>
   );

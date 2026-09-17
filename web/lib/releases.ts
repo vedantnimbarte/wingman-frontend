@@ -12,6 +12,20 @@ export type Release = {
 // unavailable or rate-limited at build time.
 const seed: Release[] = [
   {
+    // Published with an empty body; highlights from the feat commits v0.3.0..v0.4.0.
+    tag: "v0.4.0",
+    name: "v0.4.0",
+    date: "2026-09-09",
+    url: `${product.repo}/releases/tag/v0.4.0`,
+    highlights: [
+      "Steer a running turn from the TUI instead of killing it to say one thing.",
+      "A turn that is going in circles now ends, rather than only warning.",
+      "Tool schemas are paid for when a tool is used, not on every request.",
+      "`wingman doctor` repairs a config that will not load, and `serve` pairs a device instead of hand-carrying the token.",
+      "The read tool opens PDFs instead of refusing them as binary files.",
+    ],
+  },
+  {
     tag: "v0.3.0",
     name: "v0.3.0",
     date: "2026-09-05",

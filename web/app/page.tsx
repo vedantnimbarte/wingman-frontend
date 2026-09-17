@@ -1,40 +1,103 @@
-import { Hero } from "@/components/sections/Hero";
-import { ContextTax } from "@/components/sections/ContextTax";
-import { ProviderMarquee } from "@/components/sections/ProviderMarquee";
-import { PillarSection } from "@/components/sections/PillarSection";
-import { FeatureGrid } from "@/components/sections/FeatureGrid";
-import { InstallBand } from "@/components/sections/InstallBand";
-import { SocialProof } from "@/components/sections/SocialProof";
-import { CompareTeaser } from "@/components/sections/CompareTeaser";
-import { CtaBanner } from "@/components/sections/CtaBanner";
-import { pillars, secondaryFeatures } from "@/content/features";
+import { Install } from "@/components/Install";
+import { TurnDiagram } from "@/components/TurnDiagram";
+import { CopyButton } from "@/components/ui/CopyButton";
 import { product } from "@/content/product";
+
+const why = [
+  {
+    title: "It resolves, it doesn't grep.",
+    body: (
+      <>
+        Definitions and references come from your language server, across 11 languages, so a rename
+        follows imports and types rather than matching names. Tree-sitter covers the gap when no
+        server is installed.
+      </>
+    ),
+  },
+  {
+    title: "It proves the work before it says done.",
+    body: (
+      <>
+        An edit arms a gate: your build and language-server diagnostics have to pass. A failure goes
+        back to the model, with a limit on retries instead of a loop until green.
+      </>
+    ),
+  },
+  {
+    title: "Any model, your keys.",
+    body: (
+      <>
+        Hosted providers or a local model through Ollama, LM Studio or vLLM, all behind one message
+        format. <code>wingman cost --compare</code> reprices a session on other models.
+      </>
+    ),
+  },
+];
+
+const steps = [
+  { title: "Create a config.", command: "wingman config init", note: "Writes ~/.wingman/config.toml." },
+  { title: "Add a key.", command: "export ANTHROPIC_API_KEY=sk-ant-...", note: "Any provider works. Local models need no key." },
+  { title: "Ask.", command: "wingman", note: <>Or run one prompt without the UI: <code>wingman --print &quot;explain this repo&quot;</code></> },
+];
 
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <ContextTax />
+      <section className="sec hero">
+        <h1>{product.tagline}</h1>
+        <p className="lede">
+          Wingman runs in your terminal with the model you choose. It reads code through your
+          language server, and checks its own edits before it tells you it&apos;s done.
+        </p>
+        <Install />
+      </section>
 
-      {pillars.map((f, i) => (
-        <PillarSection key={f.id} feature={f} index={i} />
-      ))}
+      <section className="sec" aria-labelledby="how">
+        <div className="wide">
+          <h2 id="how">How one turn works.</h2>
+          <p className="lede">
+            One request through the agent loop: a tool call, a failed build, a retry, and a pass.
+          </p>
+          <TurnDiagram />
+        </div>
+      </section>
 
-      <ProviderMarquee />
+      <section className="sec" aria-labelledby="why">
+        <div className="wide">
+          <h2 id="why">Why it&apos;s different.</h2>
+          <ul className="rows">
+            {why.map((w) => (
+              <li key={w.title}>
+                <h3>{w.title}</h3>
+                <p>{w.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-      <FeatureGrid
-        eyebrow="Everything else"
-        title="The rest is table stakes — it has those too"
-        lead="A batteries-included tool layer, an MCP host and server, a multi-agent pilot, a board, a remote API, and safety nets — all gated by the active permission mode."
-        features={secondaryFeatures}
-      />
+      <section className="sec" aria-labelledby="start">
+        <div className="col">
+          <h2 id="start">Start in three steps.</h2>
+          <p className="lede">Once it&apos;s installed, run these in the project you want to work on.</p>
+          <ol className="rows steps">
+            {steps.map((s, i) => (
+              <li key={s.command}>
+                <span className="n" aria-hidden="true">{i + 1}</span>
+                <div>
+                  <h3>{s.title}</h3>
+                  <div className="cmd">
+                    <code>{s.command}</code>
+                    <CopyButton code={s.command} label={`Copy ${s.command}`} />
+                  </div>
+                  <p className="note">{s.note}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-      <SocialProof />
-      <CompareTeaser />
-      <InstallBand />
-      <CtaBanner />
-
-      {/* SoftwareApplication structured data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -48,7 +111,7 @@ export default function HomePage() {
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
             description: product.positioning,
             url: product.repo,
-            license: "https://opensource.org/licenses/MIT",
+            license: "https://www.apache.org/licenses/LICENSE-2.0",
           }),
         }}
       />
