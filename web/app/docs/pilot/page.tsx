@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DocPage } from "@/components/docs/DocPage";
 import { DocHeading } from "@/components/docs/DocHeading";
-import { CopyOneLiner } from "@/components/ui/CopyOneLiner";
 import { CodeBlock, Code } from "@/components/ui/CodeBlock";
 import { Callout } from "@/components/docs/Callout";
 import { ReferenceTable } from "@/components/docs/ReferenceTable";
@@ -27,7 +26,7 @@ export default function Pilot() {
       </Callout>
 
       <DocHeading as="h2" id="run">Running pilot</DocHeading>
-      <CopyOneLiner command={'wingman pilot run "add pagination to the /users API"'} />
+      <CodeBlock>{'wingman pilot run "add pagination to the /users API"'}</CodeBlock>
       <p>Pilot estimates cost and risk up front, then plans and delegates:</p>
       <Terminal name="pilot" />
 

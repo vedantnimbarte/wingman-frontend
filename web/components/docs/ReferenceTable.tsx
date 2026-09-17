@@ -1,9 +1,6 @@
 import { Code } from "@/components/ui/CodeBlock";
 
-/**
- * A scrollable reference table (CLI commands, config keys, slash commands).
- * The first column of each row is rendered as an inline code token.
- */
+/** A scrollable reference table; the first column renders as code by default. */
 export function ReferenceTable({
   head,
   rows,
@@ -14,24 +11,20 @@ export function ReferenceTable({
   codeFirst?: boolean;
 }) {
   return (
-    <div className="my-5 overflow-x-auto plane rounded-lg">
-      <table className="w-full min-w-[480px] border-collapse text-left">
+    <div className="table">
+      <table>
         <thead>
-          <tr className="border-b border-hairline text-caption uppercase text-ink-tertiary">
+          <tr>
             {head.map((h) => (
-              <th key={h} className="px-5 py-3 font-medium">
-                {h}
-              </th>
+              <th key={h}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr key={i} className="border-b border-hairline/50 align-top last:border-0">
+            <tr key={i}>
               {row.map((cell, j) => (
-                <td key={j} className="px-5 py-3 text-body-sm text-ink-subtle">
-                  {j === 0 && codeFirst ? <Code>{cell}</Code> : cell}
-                </td>
+                <td key={j}>{j === 0 && codeFirst ? <Code>{cell}</Code> : cell}</td>
               ))}
             </tr>
           ))}

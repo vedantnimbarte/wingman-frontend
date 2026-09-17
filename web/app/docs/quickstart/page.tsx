@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { DocPage } from "@/components/docs/DocPage";
 import { DocHeading } from "@/components/docs/DocHeading";
-import { CopyOneLiner } from "@/components/ui/CopyOneLiner";
 import { CodeBlock, Code } from "@/components/ui/CodeBlock";
 import { Callout } from "@/components/docs/Callout";
 import { Terminal } from "@/components/Terminal";
@@ -22,12 +21,18 @@ export default function Quickstart() {
       description="Install Wingman, connect a provider, and run your first task — in about five minutes."
     >
       <DocHeading as="h2" id="install">1. Install</DocHeading>
-      <p>Grab a prebuilt binary. No clone, no cargo, no build:</p>
-      <CopyOneLiner command={product.installOneLiner} />
+      <p>Grab a prebuilt binary. No clone, no cargo, no build. On macOS or Linux:</p>
+      <CodeBlock>{product.installOneLiner}</CodeBlock>
+      <p>On Windows, in PowerShell:</p>
+      <CodeBlock lang="ini">{product.installWindows}</CodeBlock>
       <p>
-        For all platforms (including Windows and from-source), see the{" "}
-        <Link href="/install">install page</Link>. Verify it landed:
+        The script puts <Code>wingman</Code> in <Code>~/.local/bin</Code> (override with{" "}
+        <Code>WINGMAN_INSTALL_DIR</Code>, pin a release with <Code>VERSION={product.version}</Code>).
+        Prebuilt targets are Linux x86_64 and aarch64 (glibc 2.38 or newer), macOS on Apple silicon,
+        and Windows x86_64. Anywhere else, build from source:
       </p>
+      <CodeBlock>{product.fromSource}</CodeBlock>
+      <p>Verify it landed:</p>
       <CodeBlock>{`wingman --version`}</CodeBlock>
 
       <DocHeading as="h2" id="log-in">2. Connect a provider</DocHeading>

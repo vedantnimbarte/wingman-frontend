@@ -1,20 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { display, sans, mono } from "@/lib/fonts";
-import { TopNav } from "@/components/nav/TopNav";
-import { Footer } from "@/components/footer/Footer";
+import { Header, Footer } from "@/components/chrome";
 import { Analytics } from "@/components/Analytics";
-import { getRepoStats } from "@/lib/github";
-import { product } from "@/content/product";
+import { product, SITE } from "@/content/product";
 import "./globals.css";
 
 export const viewport: Viewport = {
   themeColor: "#06060b",
 };
 
-const title = "Wingman — the coding agent that resolves instead of guessing";
+const title = "Wingman: the coding agent that asks the compiler instead of guessing";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wingman.dev"),
+  metadataBase: new URL(SITE),
   title: {
     default: title,
     template: "%s · Wingman",
@@ -28,9 +26,6 @@ export const metadata: Metadata = {
     "language server",
     "CLI",
     "open source",
-    "Claude Code alternative",
-    "Cursor alternative",
-    "Aider alternative",
     "Rust",
     "LLM",
     "MCP",
@@ -52,25 +47,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { stars } = await getRepoStats();
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${sans.variable} ${mono.variable}`}>
-      <body className="min-h-screen">
-        {/* Scroll-reveal hides content only when JS can un-hide it. Runs before
-            the page below it parses, so nothing flashes. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-surface-2 focus:px-4 focus:py-2 focus:text-body-sm focus:text-ink"
-        >
+    <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+      {/* Extensions (e.g. ColorZilla) stamp attributes on <body> before hydration. */}
+      <body suppressHydrationWarning>
+        <a href="#main" className="skip">
           Skip to content
         </a>
-        <TopNav stars={stars} />
+        <Header />
         <main id="main">{children}</main>
         <Footer />
         <Analytics />
